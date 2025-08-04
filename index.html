@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniFECAF - Entregas Acadêmicas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="form-wrapper">
+        <header>
+            <img src="image.png" alt="Logo UniFECAF">
+            <h1>Entregas Acadêmicas</h1>
+            <p>Formulário para Levantamento de Hard Skills</p>
+        </header>
+
+        <form id="hard-skills-form">
+            <fieldset>
+                <legend>Informações Gerais</legend>
+                <div class="form-group autocomplete-container">
+                    <label for="curso">Curso:</label>
+                    <!-- Campo de curso com autocomplete -->
+                    <input type="text" id="curso" name="curso" class="autocomplete-input" required placeholder="Digite ou selecione o curso">
+                    <div class="autocomplete-results"></div> <!-- Div para os resultados do autocomplete -->
+                </div>
+                <div class="form-group">
+                    <label for="coordenador">Coordenação Responsável:</label>
+                    <input type="text" id="coordenador" name="coordenador" required>
+                </div>
+                <div class="form-group">
+                    <label for="professor">Professor Participante:</label>
+                    <input type="text" id="professor" name="professor" required>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Hard Skills Levantadas</legend>
+                <div id="hard-skills-container">
+                    <!-- Cards de Hard Skills serão inseridos aqui pelo JavaScript -->
+                </div>
+                <button type="button" id="add-skill-btn" class="add-btn">+ Adicionar Hard Skill</button>
+            </fieldset>
+
+            <fieldset>
+                <legend>Insights Estratégicos</legend>
+                <div class="form-group">
+                    <label for="insights">Insights para inserção de novos conteúdos nos planos de aprendizagem:</label>
+                    <textarea id="insights" name="insights" rows="5"></textarea>
+                </div>
+            </fieldset>
+
+            <div class="submit-section">
+                <button type="submit" id="submit-btn" class="submit-btn">Enviar Dados</button>
+                <div id="loading-spinner" class="spinner" style="display: none;"></div>
+            </div>
+
+        </form>
+         <p id="feedback-message"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
