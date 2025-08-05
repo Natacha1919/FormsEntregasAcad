@@ -128,12 +128,12 @@ select { /* Adicionado 'select' aqui */
     -webkit-appearance: none; /* Remove estilo padrão de select no Webkit */
     -moz-appearance: none;    /* Remove estilo padrão de select no Mozilla */
     appearance: none;         /* Remove estilo padrão de select */
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2C197.3L146.2%2C56.6L5.4%2C197.3c-7.8%2C7.8-20.5%2C7.8-28.3%2C0c-7.8-7.8-7.8-20.5%2C0-28.3l137.9-137.9c4-3.9%2C8.9-5.8%2C13.8-5.8c4.9%2C0%2C9.8%2C1.9%2C13.8%2C5.8l137.9%2C137.9c7.8%2C7.8%2C7.8%2C20.5%2C0%2C28.3C307.5%2C205.1%2C294.8%2C205.1%2C287%2C197.3z%22%2F%3E%3C%2Fsvg%3E'); /* Seta customizada */
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 12px;
-    padding-right: 3rem; /* Espaço para a seta customizada */
 }
+/* Remove a seta de selects, pois não estamos usando-os como dropdowns padrão */
+select {
+    background-image: none;
+}
+
 
 input[type="text"]:focus,
 input[type="number"]:focus,
@@ -375,21 +375,21 @@ textarea {
 }
 
 /* ======================================================= */
-/* == NOVOS ESTILOS PARA CURSO MÚLTIPLO                 == */
+/** MODIFICADO: Estilos para campos de tags (cursos e disciplinas) */
 /* ======================================================= */
 
 .tags-input-container {
     display: flex;
-    flex-wrap: wrap; /* Permite que as tags quebrem a linha */
-    gap: 8px; /* Espaço entre as tags */
+    flex-wrap: wrap; 
+    gap: 8px; 
     align-items: center;
     width: 100%;
-    padding: 0.5rem; /* Padding interno menor, pois as tags já têm o seu */
+    padding: 0.5rem; 
     border: 1px solid var(--border-color);
     border-radius: 8px;
     background-color: #fcfcfc;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    cursor: text; /* Muda o cursor para indicar que é um campo de texto */
+    cursor: text; 
 }
 
 .tags-input-container:focus-within {
@@ -398,31 +398,33 @@ textarea {
     box-shadow: 0 0 8px rgba(14, 119, 204, 0.4);
 }
 
-.tags-input-container #curso-input {
-    flex-grow: 1; /* Faz o input ocupar o espaço restante na linha */
+/* O input de texto dentro do container de tags */
+.tags-input-container .autocomplete-input {
+    flex-grow: 1; 
     border: none;
     outline: none;
     padding: 0.5rem;
-    background-color: transparent; /* Fundo transparente para se misturar */
+    background-color: transparent; 
     font-size: 1rem;
-    min-width: 150px; /* Largura mínima para o campo de digitação */
+    min-width: 150px;
 }
 
-.course-tag {
+/* Estilo base genérico para qualquer tag */
+.tag {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: var(--unifecaf-blue-medium);
     color: white;
     padding: 6px 12px;
-    border-radius: 16px; /* Bordas bem arredondadas para estilo "pill" */
+    border-radius: 16px; 
     font-size: 0.9rem;
     font-weight: 500;
-    white-space: nowrap; /* Impede que o nome do curso quebre linha */
+    white-space: nowrap; 
     animation: fadeIn 0.3s;
 }
 
-.course-tag .remove-tag-btn {
+/* Estilo para o botão de remover em qualquer tag */
+.tag .remove-tag-btn {
     display: inline-block;
     width: 16px;
     height: 16px;
@@ -435,11 +437,20 @@ textarea {
     transition: background-color 0.2s ease;
 }
 
-.course-tag .remove-tag-btn:hover {
+.tag .remove-tag-btn:hover {
     background-color: rgba(255, 255, 255, 0.4);
 }
 
-/* Ajuste para o container de resultados do autocomplete do curso */
-#curso-tags-container + .autocomplete-results {
-    top: calc(100% + 5px); /* Posiciona relativo ao container de tags */
+/* Cores específicas para cada tipo de tag */
+.course-tag {
+    background-color: var(--unifecaf-green-dark); /* Azul para Cursos */
+}
+
+.discipline-tag {
+    background-color: var(--unifecaf-green-dark); /* Roxo para Disciplinas */
+}
+
+/* Ajuste para a lista de autocomplete de campos com tags */
+.tags-input-container + .autocomplete-results {
+    top: calc(100% + 2px); /* Posiciona relativo ao container de tags */
 }

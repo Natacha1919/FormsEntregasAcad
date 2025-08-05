@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const coursesList = ["Administração","Arquitetura e Urbanismo","Ciência da Computação","Direito","Engenharia Civil","Engenharia de Produção","Gestão de Recursos Humanos","Marketing Digital","Pedagogia","Psicologia","Sistemas de Informação","Análise e Desenvolvimento de Sistemas","Design Gráfico","Educação Física","Enfermagem","Fisioterapia","Nutrição","Contabilidade","Jornalismo","Publicidade e Propaganda","Tecnologia em Jogos Digitais","Gestão Comercial","Logística","Recursos Humanos","Serviço Social","Outro"];
     
     let disciplinesList = [];
-    let selectedCourses = new Set(); // Usa um Set para evitar cursos duplicados
+    let selectedCourses = new Set(); 
 
     const form = document.getElementById('hard-skills-form');
     const addSkillBtn = document.getElementById('add-skill-btn');
@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingSpinner = document.getElementById('loading-spinner');
     const feedbackMessage = document.getElementById('feedback-message');
     
-    // Novas referências para o campo de cursos múltiplos
     const cursoInput = document.getElementById('curso-input');
     const cursoTagsContainer = document.getElementById('curso-tags-container');
     const cursoResultsContainer = document.getElementById('curso-results');
@@ -44,18 +43,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // **NOVA FUNÇÃO** para lidar com a seleção múltipla de cursos
+    // Função para lidar com a seleção múltipla de cursos
     function setupCourseMultiselect() {
         function addCourseTag(courseName) {
             if (!courseName || selectedCourses.has(courseName)) {
-                cursoInput.value = ''; // Limpa o input mesmo se o curso já existe
-                return; // Não adiciona se for vazio ou duplicado
+                cursoInput.value = '';
+                return;
             }
 
             selectedCourses.add(courseName);
 
             const tag = document.createElement('div');
-            tag.classList.add('course-tag');
+            tag.classList.add('tag', 'course-tag'); /** MODIFICADO para usar classe genérica */
             tag.textContent = courseName;
 
             const removeBtn = document.createElement('span');
@@ -67,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             tag.appendChild(removeBtn);
-            cursoTagsContainer.insertBefore(tag, cursoInput); // Insere a tag antes do campo de input
+            cursoTagsContainer.insertBefore(tag, cursoInput);
             cursoInput.value = '';
             cursoResultsContainer.innerHTML = '';
         }
@@ -89,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
         
-        // Permite adicionar uma tag pressionando Enter
         cursoInput.addEventListener('keydown', (e) => {
             if(e.key === 'Enter') {
                 e.preventDefault();
@@ -101,11 +99,63 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Função para criar card de skill (com pequena alteração)
+    /** MODIFICADO: Adicionada uma nova função dedicada para disciplinas */
+    function setupDisciplineMultiselect(inputElement, tagsContainer, resultsContainer, selectedDisciplinesSet) {
+        function addDisciplineTag(disciplineName) {
+            if (!disciplineName || selectedDisciplinesSet.has(disciplineName)) {
+                inputElement.value = '';
+                return; 
+            }
+            selectedDisciplinesSet.add(disciplineName);
+            const tag = document.createElement('div');
+            tag.classList.add('tag', 'discipline-tag'); 
+            tag.textContent = disciplineName;
+            const removeBtn = document.createElement('span');
+            removeBtn.classList.add('remove-tag-btn');
+            removeBtn.innerHTML = '×';
+            removeBtn.addEventListener('click', () => {
+                selectedDisciplinesSet.delete(disciplineName);
+                tag.remove();
+            });
+            tag.appendChild(removeBtn);
+            tagsContainer.insertBefore(tag, inputElement);
+            inputElement.value = '';
+            resultsContainer.innerHTML = '';
+        }
+        inputElement.addEventListener('input', () => {
+            const value = inputElement.value.toLowerCase();
+            resultsContainer.innerHTML = '';
+            if (!value) return;
+            const filteredItems = disciplinesList.filter(item => item && item.toLowerCase().includes(value) && !selectedDisciplinesSet.has(item));
+            filteredItems.slice(0, 10).forEach(itemText => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('autocomplete-item');
+                const regex = new RegExp(`(${value})`, 'gi');
+                itemDiv.innerHTML = itemText.replace(regex, '<strong>$1</strong>');
+                itemDiv.addEventListener('click', () => addDisciplineTag(itemText));
+                resultsContainer.appendChild(itemDiv);
+            });
+        });
+        inputElement.addEventListener('keydown', (e) => {
+            if(e.key === 'Enter') {
+                e.preventDefault();
+                const firstSuggestion = resultsContainer.querySelector('.autocomplete-item');
+                if(firstSuggestion) {
+                    addDisciplineTag(firstSuggestion.textContent);
+                } else if (inputElement.value) {
+                    addDisciplineTag(inputElement.value);
+                }
+            }
+        });
+    }
+
+    /** MODIFICADO: Função de criar card completamente atualizada */
     const addSkillCard = () => {
         skillCounter++;
         const card = document.createElement('div');
         card.classList.add('skill-card');
+
+        // O HTML para o campo de disciplinas foi alterado para o formato de tags
         card.innerHTML = `
             <button type="button" class="remove-btn" title="Remover Skill">×</button>
             <div class="skill-card-content">
@@ -120,20 +170,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
             <div class="form-group autocomplete-container" style="margin-top: 1rem;">
-                <label for="skill-disciplines-${skillCounter}">Disciplinas/Unidades Curriculares associadas (separe por vírgula):</label>
-                <input type="text" id="skill-disciplines-${skillCounter}" class="skill-disciplines autocomplete-input" placeholder="Ex: Cálculo I, Gestão de Projetos">
+                <label for="skill-disciplines-input-${skillCounter}">Disciplinas/Unidades Curriculares associadas:</label>
+                <div class="tags-input-container discipline-tags-container">
+                    <input type="text" id="skill-disciplines-input-${skillCounter}" class="autocomplete-input" placeholder="Busque e adicione disciplinas...">
+                </div>
                 <div class="autocomplete-results"></div>
             </div>
         `;
-        card.querySelector('.remove-btn').addEventListener('click', () => card.remove());
-        skillsContainer.appendChild(card);
 
-        // **ALTERADO AQUI**: Passamos o container de resultados correto
+        skillsContainer.appendChild(card);
+        card.querySelector('.remove-btn').addEventListener('click', () => card.remove());
         setupAutocomplete(card.querySelector('.skill-name'), hardSkillsList, card.querySelector('.skill-name + .autocomplete-results'));
-        setupAutocomplete(card.querySelector('.skill-disciplines'), disciplinesList, card.querySelector('.skill-disciplines + .autocomplete-results'));
+
+        // Lógica para inicializar o campo de disciplinas multisselecionável
+        card.selectedDisciplines = new Set();
+        const disciplineInput = card.querySelector(`#skill-disciplines-input-${skillCounter}`);
+        const disciplineTagsContainer = card.querySelector('.discipline-tags-container');
+        const disciplineResultsContainer = card.querySelector('.discipline-tags-container + .autocomplete-results');
+        setupDisciplineMultiselect(disciplineInput, disciplineTagsContainer, disciplineResultsContainer, card.selectedDisciplines);
     };
     
-    // Função de envio do formulário (**ALTERADA**)
+    /** MODIFICADO: Função de envio atualizada para coletar dados das tags de disciplina */
     const handleFormSubmit = (e) => {
         e.preventDefault();
         submitBtn.disabled = true;
@@ -142,10 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         feedbackMessage.className = '';
 
         const formData = new FormData();
-        
-        // **ALTERADO**: Coleta os cursos do Set e envia como JSON
         formData.append('cursos', JSON.stringify(Array.from(selectedCourses)));
-        
         formData.append('coordenador', document.getElementById('coordenador').value);
         formData.append('insights', document.getElementById('insights').value);
         
@@ -156,7 +210,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 skillsDataArray.push({
                     name: skillName,
                     frequency: card.querySelector('.skill-frequency').value,
-                    disciplines: card.querySelector('.skill-disciplines').value.split(',').map(d => d.trim()).filter(d => d)
+                    // Coleta os dados do Set de disciplinas anexado ao card
+                    disciplines: Array.from(card.selectedDisciplines) 
                 });
             }
         });
@@ -170,8 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     feedbackMessage.textContent = 'Dados enviados com sucesso!';
                     feedbackMessage.classList.add('success');
                     form.reset();
-                    // Limpa as tags de curso e o container de skills
-                    cursoTagsContainer.querySelectorAll('.course-tag').forEach(tag => tag.remove());
+                    cursoTagsContainer.querySelectorAll('.tag').forEach(tag => tag.remove());
                     selectedCourses.clear();
                     skillsContainer.innerHTML = '';
                     addSkillCard(); 
@@ -208,18 +262,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // ========================
     // INICIALIZAÇÃO DA PÁGINA
     // ========================
-    
-    // **ALTERADO**: Chamamos a nova função para o campo de cursos
     setupCourseMultiselect();
-    
     addSkillBtn.addEventListener('click', addSkillCard);
     form.addEventListener('submit', handleFormSubmit);
-
     initializeApp();
     
-    // Fecha qualquer lista de autocomplete aberta ao clicar fora
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.autocomplete-container') && !e.target.closest('#curso-tags-container + .autocomplete-results')) {
+        if (!e.target.closest('.autocomplete-container')) {
             document.querySelectorAll('.autocomplete-results').forEach(res => res.innerHTML = '');
         }
     });
