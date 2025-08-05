@@ -373,3 +373,73 @@ textarea {
         border-radius: 0; /* Remove borda arredondada em telas muito pequenas */
     }
 }
+
+/* ======================================================= */
+/* == NOVOS ESTILOS PARA CURSO MÚLTIPLO                 == */
+/* ======================================================= */
+
+.tags-input-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que as tags quebrem a linha */
+    gap: 8px; /* Espaço entre as tags */
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem; /* Padding interno menor, pois as tags já têm o seu */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #fcfcfc;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: text; /* Muda o cursor para indicar que é um campo de texto */
+}
+
+.tags-input-container:focus-within {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 8px rgba(14, 119, 204, 0.4);
+}
+
+.tags-input-container #curso-input {
+    flex-grow: 1; /* Faz o input ocupar o espaço restante na linha */
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+    background-color: transparent; /* Fundo transparente para se misturar */
+    font-size: 1rem;
+    min-width: 150px; /* Largura mínima para o campo de digitação */
+}
+
+.course-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--unifecaf-blue-medium);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 16px; /* Bordas bem arredondadas para estilo "pill" */
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap; /* Impede que o nome do curso quebre linha */
+    animation: fadeIn 0.3s;
+}
+
+.course-tag .remove-tag-btn {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.2s ease;
+}
+
+.course-tag .remove-tag-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Ajuste para o container de resultados do autocomplete do curso */
+#curso-tags-container + .autocomplete-results {
+    top: calc(100% + 5px); /* Posiciona relativo ao container de tags */
+}

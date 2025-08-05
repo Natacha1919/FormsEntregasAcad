@@ -1,28 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // NOSSA BASE DE DADOS DE HARD SKILLS
-    const hardSkillsList = [
-        "Python", "Java", "JavaScript", "C++", "C#", "SQL", "R", "MATLAB", "Ruby", "PHP", "HTML", "CSS", "React", "Angular", "Vue.js", "Django", "Flask", "Node.js", "Spring", "Kotlin", "Swift", "Objective-C", "React Native", "Flutter", "DevOps (CI/CD)", "Kubernetes", "Docker", "AWS", "Microsoft Azure", "Google Cloud Platform", "Terraform", "Ansible", "Linux/Unix (administração)", "Git/GitHub", "Jenkins", "Prometheus/Grafana", "Selenium", "Testes automatizados", "Estrutura de Dados e Algoritmos", "Arquitetura de Software e Padrões de Projeto",
-        "Análise de Dados", "Business Intelligence", "Power BI", "Tableau", "Apache Spark", "Hadoop", "ETL (data pipelines)", "SQL avançado", "NoSQL (MongoDB, Cassandra)", "Pandas (Python)", "NumPy", "Scikit-Learn", "TensorFlow", "PyTorch", "Deep Learning", "Machine Learning", "NLP (Processamento de Linguagem Natural)", "Visão Computacional", "Modelagem Estatística", "Regressão e Classificação", "Análise de Séries Temporais", "Forecasting", "Mineração de Dados (Data Mining)", "Big Data", "SAS", "SPSS", "Power Query", "Google Analytics", "Estatística Aplicada", "Design Experimental", "Visualização de Dados", "Storytelling com Dados",
-        "Frameworks de IA (ML)", "Modelagem de Redes Neurais", "Reinforcement Learning", "Otimização de Hiperparâmetros", "Deploy de Modelos ML", "ML Engineering", "Pipeline ML", "Ética em IA", "LLMs (Large Language Models)", "Transfer Learning", "Anotação e Rotulagem de Dados", "Interpretabilidade de Modelos", "AI Ops", "Robótica Inteligente",
-        "Segurança da Informação", "Criptografia", "Firewalls", "IDS/IPS", "CISSP (certificação)", "CEH (certificação)", "SOC (Security Operations Center)", "Pentest (Penetration Testing)", "Gestão de Riscos", "LGPD", "Hardening de Servidores", "PKI / VPN", "Resposta a Incidentes", "Forense Digital", "DevSecOps",
-        "Scrum", "Kanban", "PMBOK", "PMP (certificação)", "Jira", "Trello", "MS Project", "Agile Scaling (SAFe)", "Gestão de Recursos", "Roadmapping", "Lean", "OKR", "Gestão de Riscos (Projetos)", "Gestão de Entregas (Deliverables)", "Métricas Ágeis",
-        "SEO", "SEM", "Google Ads", "Facebook Ads", "HubSpot", "RD Station", "Automação de Marketing", "Funil de Conversão", "CRM (Salesforce, HubSpot)", "E-mail Marketing", "Copywriting", "PPC", "Teste A/B", "Gestão de Mídias Sociais", "Métricas de Performance", "Growth Hacking", "Marketing de Influência",
-        "UX Research", "Prototipagem (Figma, Sketch)", "UI Design", "Adobe Photoshop", "Adobe Illustrator", "Adobe InDesign", "Adobe Premiere", "Final Cut Pro", "DaVinci Resolve", "After Effects", "Audacity / Adobe Audition", "UX Writing", "Testes de Usabilidade", "Design Thinking", "Storytelling Visual", "Ilustração Digital", "Design Responsivo", "Acessibilidade (WCAG)",
-        "Análise Financeira", "Contabilidade", "IFRS / Normas Contábeis", "Planejamento Fiscal", "Auditoria", "BI Financeiro", "Compliance", "Gestão de Risco Financeiro", "Direito Contratual", "Direito Tributário", "ERP (SAP, TOTVS)", "Excel Avançado (Financeiro)",
-        "AutoCAD", "SolidWorks", "BIM", "CAD/CAM", "Simulações (ANSYS, COMSOL)", "Automação Industrial (PLC)", "Operação de Drones", "Topografia Digital", "Lean Manufacturing", "Six Sigma", "Operação de Maquinário Pesado", "Certificações NR (NR-5, NR-10, NR-35)", "Operação de Equipamentos Laboratoriais", "Biossegurança", "Fotografia Técnica", "Impressão 3D", "Usinagem CNC", "Sistemas Operados por Robôs", "Engenharia Elétrica",
-        "Inglês Fluente", "Espanhol Fluente", "Francês / Alemão / Mandarim", "Redação Técnica", "Documentação Técnica e Relatórios"
-    ];
-
-    // NOVA LISTA DE CURSOS PARA AUTOCOMPLETE
-    const coursesList = [
-        "Administração", "Arquitetura e Urbanismo", "Ciência da Computação", "Direito", "Engenharia Civil",
-        "Engenharia de Produção", "Gestão de Recursos Humanos", "Marketing Digital", "Pedagogia", "Psicologia",
-        "Sistemas de Informação", "Análise e Desenvolvimento de Sistemas", "Design Gráfico", "Educação Física",
-        "Enfermagem", "Fisioterapia", "Nutrição", "Contabilidade", "Jornalismo", "Publicidade e Propaganda",
-        "Tecnologia em Jogos Digitais", "Gestão Comercial", "Logística", "Recursos Humanos", "Serviço Social",
-        "Outro" // Deixa a opção "Outro" para o usuário, se precisar
-    ];
+    const API_URL = "https://myapi-1ytp.onrender.com/dados";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbysvyAT94eDmcuxuYujdeMYjT6LLfasH53-NIdh5FTBDSDo1Z2EO1zJxQdCjqOZ2Ff7/exec";
+    
+    const hardSkillsList = ["Python","Java","JavaScript","C++","C#","SQL","R","MATLAB","Ruby","PHP","HTML","CSS","React","Angular","Vue.js","Django","Flask","Node.js","Spring","Kotlin","Swift","Objective-C","React Native","Flutter","DevOps (CI/CD)","Kubernetes","Docker","AWS","Microsoft Azure","Google Cloud Platform","Terraform","Ansible","Linux/Unix (administração)","Git/GitHub","Jenkins","Prometheus/Grafana","Selenium","Testes automatizados","Estrutura de Dados e Algoritmos","Arquitetura de Software e Padrões de Projeto","Análise de Dados","Business Intelligence","Power BI","Tableau","Apache Spark","Hadoop","ETL (data pipelines)","SQL avançado","NoSQL (MongoDB, Cassandra)","Pandas (Python)","NumPy","Scikit-Learn","TensorFlow","PyTorch","Deep Learning","Machine Learning","NLP (Processamento de Linguagem Natural)","Visão Computacional","Modelagem Estatística","Regressão e Classificação","Análise de Séries Temporais","Forecasting","Mineração de Dados (Data Mining)","Big Data","SAS","SPSS","Power Query","Google Analytics","Estatística Aplicada","Design Experimental","Visualização de Dados","Storytelling com Dados","Frameworks de IA (ML)","Modelagem de Redes Neurais","Reinforcement Learning","Otimização de Hiperparâmetros","Deploy de Modelos ML","ML Engineering","Pipeline ML","Ética em IA","LLMs (Large Language Models)","Transfer Learning","Anotação e Rotulagem de Dados","Interpretabilidade de Modelos","AI Ops","Robótica Inteligente","Segurança da Informação","Criptografia","Firewalls","IDS/IPS","CISSP (certificação)","CEH (certificação)","SOC (Security Operations Center)","Pentest (Penetration Testing)","Gestão de Riscos","LGPD","Hardening de Servidores","PKI / VPN","Resposta a Incidentes","Forense Digital","DevSecOps","Scrum","Kanban","PMBOK","PMP (certificação)","Jira","Trello","MS Project","Agile Scaling (SAFe)","Gestão de Recursos","Roadmapping","Lean","OKR","Gestão de Riscos (Projetos)","Gestão de Entregas (Deliverables)","Métricas Ágeis","SEO","SEM","Google Ads","Facebook Ads","HubSpot","RD Station","Automação de Marketing","Funil de Conversão","CRM (Salesforce, HubSpot)","E-mail Marketing","Copywriting","PPC","Teste A/B","Gestão de Mídias Sociais","Métricas de Performance","Growth Hacking","Marketing de Influência","UX Research","Prototipagem (Figma, Sketch)","UI Design","Adobe Photoshop","Adobe Illustrator","Adobe InDesign","Adobe Premiere","Final Cut Pro","DaVinci Resolve","After Effects","Audacity / Adobe Audition","UX Writing","Testes de Usabilidade","Design Thinking","Storytelling Visual","Ilustração Digital","Design Responsivo","Acessibilidade (WCAG)","Análise Financeira","Contabilidade","IFRS / Normas Contábeis","Planejamento Fiscal","Auditoria","BI Financeiro","Compliance","Gestão de Risco Financeiro","Direito Contratual","Direito Tributário","ERP (SAP, TOTVS)","Excel Avançado (Financeiro)","AutoCAD","SolidWorks","BIM","CAD/CAM","Simulações (ANSYS, COMSOL)","Automação Industrial (PLC)","Operação de Drones","Topografia Digital","Lean Manufacturing","Six Sigma","Operação de Maquinário Pesado","Certificações NR (NR-5, NR-10, NR-35)","Operação de Equipamentos Laboratoriais","Biossegurança","Fotografia Técnica","Impressão 3D","Usinagem CNC","Sistemas Operados por Robôs","Engenharia Elétrica","Inglês Fluente","Espanhol Fluente","Francês / Alemão / Mandarim","Redação Técnica","Documentação Técnica e Relatórios"];
+    const coursesList = ["Administração","Arquitetura e Urbanismo","Ciência da Computação","Direito","Engenharia Civil","Engenharia de Produção","Gestão de Recursos Humanos","Marketing Digital","Pedagogia","Psicologia","Sistemas de Informação","Análise e Desenvolvimento de Sistemas","Design Gráfico","Educação Física","Enfermagem","Fisioterapia","Nutrição","Contabilidade","Jornalismo","Publicidade e Propaganda","Tecnologia em Jogos Digitais","Gestão Comercial","Logística","Recursos Humanos","Serviço Social","Outro"];
+    
+    let disciplinesList = [];
+    let selectedCourses = new Set(); // Usa um Set para evitar cursos duplicados
 
     const form = document.getElementById('hard-skills-form');
     const addSkillBtn = document.getElementById('add-skill-btn');
@@ -30,50 +15,93 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submit-btn');
     const loadingSpinner = document.getElementById('loading-spinner');
     const feedbackMessage = document.getElementById('feedback-message');
+    
+    // Novas referências para o campo de cursos múltiplos
+    const cursoInput = document.getElementById('curso-input');
+    const cursoTagsContainer = document.getElementById('curso-tags-container');
+    const cursoResultsContainer = document.getElementById('curso-results');
+
     let skillCounter = 0;
 
-    // A URL do seu App da Web implantado no Passo 1
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbysvyAT94eDmcuxuYujdeMYjT6LLfasH53-NIdh5FTBDSDo1Z2EO1zJxQdCjqOZ2Ff7/exec";
-
-        // Função genérica para autocomplete
-    function setupAutocomplete(inputElement, dataList) {
-        const resultsContainer = inputElement.nextElementSibling; // O div.autocomplete-results é o próximo irmão
-
+    // Função de autocomplete genérica (sem alterações)
+    function setupAutocomplete(inputElement, dataList, resultsContainer) {
         inputElement.addEventListener('input', () => {
             const value = inputElement.value.toLowerCase();
-            resultsContainer.innerHTML = ''; // Limpa resultados anteriores
-
-            if (!value) {
-                return;
-            }
-
-            const filteredItems = dataList.filter(item => item.toLowerCase().includes(value));
-
-            filteredItems.slice(0, 10).forEach(itemText => { // Mostra no máximo 10 resultados
+            resultsContainer.innerHTML = '';
+            if (!value) return;
+            const filteredItems = dataList.filter(item => item && item.toLowerCase().includes(value));
+            filteredItems.slice(0, 10).forEach(itemText => {
                 const itemDiv = document.createElement('div');
                 itemDiv.classList.add('autocomplete-item');
-                // Deixa em negrito a parte que o usuário digitou
                 const regex = new RegExp(`(${value})`, 'gi');
                 itemDiv.innerHTML = itemText.replace(regex, '<strong>$1</strong>');
-                
                 itemDiv.addEventListener('click', () => {
                     inputElement.value = itemText;
-                    resultsContainer.innerHTML = ''; // Limpa os resultados ao selecionar
+                    resultsContainer.innerHTML = '';
                 });
                 resultsContainer.appendChild(itemDiv);
             });
         });
+    }
 
-        // Fecha a lista de resultados se clicar fora
-        document.addEventListener('click', e => {
-            // Garante que o clique não foi dentro do container de autocomplete do input atual
-            if (!e.target.closest('.autocomplete-container') || !inputElement.closest('.autocomplete-container').contains(e.target)) {
-                resultsContainer.innerHTML = '';
+    // **NOVA FUNÇÃO** para lidar com a seleção múltipla de cursos
+    function setupCourseMultiselect() {
+        function addCourseTag(courseName) {
+            if (!courseName || selectedCourses.has(courseName)) {
+                cursoInput.value = ''; // Limpa o input mesmo se o curso já existe
+                return; // Não adiciona se for vazio ou duplicado
+            }
+
+            selectedCourses.add(courseName);
+
+            const tag = document.createElement('div');
+            tag.classList.add('course-tag');
+            tag.textContent = courseName;
+
+            const removeBtn = document.createElement('span');
+            removeBtn.classList.add('remove-tag-btn');
+            removeBtn.innerHTML = '×';
+            removeBtn.addEventListener('click', () => {
+                selectedCourses.delete(courseName);
+                tag.remove();
+            });
+
+            tag.appendChild(removeBtn);
+            cursoTagsContainer.insertBefore(tag, cursoInput); // Insere a tag antes do campo de input
+            cursoInput.value = '';
+            cursoResultsContainer.innerHTML = '';
+        }
+
+        cursoInput.addEventListener('input', () => {
+            const value = cursoInput.value.toLowerCase();
+            cursoResultsContainer.innerHTML = '';
+            if (!value) return;
+
+            const filteredItems = coursesList.filter(item => item && item.toLowerCase().includes(value) && !selectedCourses.has(item));
+
+            filteredItems.slice(0, 10).forEach(itemText => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('autocomplete-item');
+                const regex = new RegExp(`(${value})`, 'gi');
+                itemDiv.innerHTML = itemText.replace(regex, '<strong>$1</strong>');
+                itemDiv.addEventListener('click', () => addCourseTag(itemText));
+                cursoResultsContainer.appendChild(itemDiv);
+            });
+        });
+        
+        // Permite adicionar uma tag pressionando Enter
+        cursoInput.addEventListener('keydown', (e) => {
+            if(e.key === 'Enter') {
+                e.preventDefault();
+                const firstSuggestion = cursoResultsContainer.querySelector('.autocomplete-item');
+                if(firstSuggestion) {
+                    addCourseTag(firstSuggestion.textContent);
+                }
             }
         });
     }
 
-    // Função que cria o card dinâmico (onde a skill é digitada)
+    // Função para criar card de skill (com pequena alteração)
     const addSkillCard = () => {
         skillCounter++;
         const card = document.createElement('div');
@@ -91,30 +119,36 @@ document.addEventListener('DOMContentLoaded', () => {
                     <input type="number" id="skill-freq-${skillCounter}" class="skill-frequency" min="1" value="1" required>
                 </div>
             </div>
-            <div class="form-group" style="margin-top: 1rem;">
+            <div class="form-group autocomplete-container" style="margin-top: 1rem;">
                 <label for="skill-disciplines-${skillCounter}">Disciplinas/Unidades Curriculares associadas (separe por vírgula):</label>
-                <input type="text" id="skill-disciplines-${skillCounter}" class="skill-disciplines" placeholder="Ex: Cálculo I, Gestão de Projetos">
+                <input type="text" id="skill-disciplines-${skillCounter}" class="skill-disciplines autocomplete-input" placeholder="Ex: Cálculo I, Gestão de Projetos">
+                <div class="autocomplete-results"></div>
             </div>
         `;
         card.querySelector('.remove-btn').addEventListener('click', () => card.remove());
         skillsContainer.appendChild(card);
 
-        // Configura o autocomplete para o novo campo de skill
-        setupAutocomplete(card.querySelector('.autocomplete-input'), hardSkillsList);
+        // **ALTERADO AQUI**: Passamos o container de resultados correto
+        setupAutocomplete(card.querySelector('.skill-name'), hardSkillsList, card.querySelector('.skill-name + .autocomplete-results'));
+        setupAutocomplete(card.querySelector('.skill-disciplines'), disciplinesList, card.querySelector('.skill-disciplines + .autocomplete-results'));
     };
-
-    // LÓGICA DE SUBMISSÃO DO FORMULÁRIO
-    addSkillBtn.addEventListener('click', addSkillCard);
-    form.addEventListener('submit', e => {
+    
+    // Função de envio do formulário (**ALTERADA**)
+    const handleFormSubmit = (e) => {
         e.preventDefault();
         submitBtn.disabled = true;
         loadingSpinner.style.display = 'block';
         feedbackMessage.textContent = '';
+        feedbackMessage.className = '';
+
         const formData = new FormData();
-        formData.append('curso', document.getElementById('curso').value); // Valor do input do curso
+        
+        // **ALTERADO**: Coleta os cursos do Set e envia como JSON
+        formData.append('cursos', JSON.stringify(Array.from(selectedCourses)));
+        
         formData.append('coordenador', document.getElementById('coordenador').value);
-        formData.append('professor', document.getElementById('professor').value);
         formData.append('insights', document.getElementById('insights').value);
+        
         const skillsDataArray = [];
         document.querySelectorAll('.skill-card').forEach(card => {
             const skillName = card.querySelector('.skill-name').value;
@@ -126,17 +160,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
+
         formData.append('skillsData', JSON.stringify(skillsDataArray));
+
         fetch(SCRIPT_URL, { method: 'POST', body: formData })
-            .then(response => response.text())
+            .then(response => { if (!response.ok) throw new Error('A resposta da rede não foi bem-sucedida.'); return response.text(); })
             .then(data => {
-                if (data.includes("sucesso")) {
-                    feedbackMessage.textContent = 'Dados enviados com sucesso! A planilha foi atualizada.';
+                 if (data.toLowerCase().includes("sucesso")) {
+                    feedbackMessage.textContent = 'Dados enviados com sucesso!';
                     feedbackMessage.classList.add('success');
                     form.reset();
+                    // Limpa as tags de curso e o container de skills
+                    cursoTagsContainer.querySelectorAll('.course-tag').forEach(tag => tag.remove());
+                    selectedCourses.clear();
                     skillsContainer.innerHTML = '';
-                    addSkillCard(); // Adiciona o primeiro card novamente para um novo preenchimento
-                } else { throw new Error(data); }
+                    addSkillCard(); 
+                } else {
+                    throw new Error(data);
+                }
             })
             .catch(error => {
                 feedbackMessage.textContent = `Erro ao enviar os dados: ${error.message}`;
@@ -146,12 +187,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.disabled = false;
                 loadingSpinner.style.display = 'none';
             });
+    };
+
+    // Função de inicialização (sem alterações)
+    async function initializeApp() {
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) throw new Error(`Erro na API: ${response.statusText}`);
+            const dataFromApi = await response.json();
+            disciplinesList = dataFromApi.map(item => item.Disciplina).filter(Boolean);
+            console.log("Disciplinas carregadas com sucesso:", disciplinesList);
+        } catch (error) {
+            console.error("Falha ao carregar disciplinas da API:", error);
+            alert("Atenção: Não foi possível carregar a lista de disciplinas da API. O autocomplete de disciplinas não funcionará.");
+        } finally {
+            addSkillCard();
+        }
+    }
+
+    // ========================
+    // INICIALIZAÇÃO DA PÁGINA
+    // ========================
+    
+    // **ALTERADO**: Chamamos a nova função para o campo de cursos
+    setupCourseMultiselect();
+    
+    addSkillBtn.addEventListener('click', addSkillCard);
+    form.addEventListener('submit', handleFormSubmit);
+
+    initializeApp();
+    
+    // Fecha qualquer lista de autocomplete aberta ao clicar fora
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.autocomplete-container') && !e.target.closest('#curso-tags-container + .autocomplete-results')) {
+            document.querySelectorAll('.autocomplete-results').forEach(res => res.innerHTML = '');
+        }
     });
-
-    // INICIA O AUTOCOMPLETE PARA O CAMPO DE CURSO
-    const cursoInput = document.getElementById('curso');
-    setupAutocomplete(cursoInput, coursesList);
-
-    // Inicia o formulário com o primeiro card de Hard Skill
-    addSkillCard();
 });

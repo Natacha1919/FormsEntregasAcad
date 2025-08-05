@@ -18,19 +18,21 @@
         <form id="hard-skills-form">
             <fieldset>
                 <legend>Informações Gerais</legend>
-                <div class="form-group autocomplete-container">
-                    <label for="curso">Curso:</label>
-                    <!-- Campo de curso com autocomplete -->
-                    <input type="text" id="curso" name="curso" class="autocomplete-input" required placeholder="Digite ou selecione o curso">
-                    <div class="autocomplete-results"></div> <!-- Div para os resultados do autocomplete -->
-                </div>
+                
+                <!-- HTML ALTERADO AQUI -->
+                    <div class="form-group autocomplete-container">
+                        <label for="curso-input">Cursos (selecione um ou mais):</label>
+                        <div id="curso-tags-container" class="tags-input-container">
+                            <!-- ... -->
+                            <input type="text" id="curso-input" ... >
+                        </div>
+                        <div id="curso-results" class="autocomplete-results"></div> 
+                    </div>
+                <!-- FIM DA ALTERAÇÃO -->
+
                 <div class="form-group">
                     <label for="coordenador">Coordenação Responsável:</label>
                     <input type="text" id="coordenador" name="coordenador" required>
-                </div>
-                <div class="form-group">
-                    <label for="professor">Professor Participante:</label>
-                    <input type="text" id="professor" name="professor" required>
                 </div>
             </fieldset>
 
